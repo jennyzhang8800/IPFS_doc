@@ -78,7 +78,7 @@ F:\m2\repository是repository的路径
 ```
 ;E:\apache-maven-3.3.9-bin\apache-maven-3.3.9\bin
 ```
-（4）检查maven是否配置成功。在运行窗口输入：
+（5）检查maven是否配置成功。在运行窗口输入：
 ```
 mvn -v
 ```
