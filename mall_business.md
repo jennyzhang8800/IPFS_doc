@@ -1,6 +1,9 @@
 ## "君弘金融商城"业务类型
 
 [https://mall.gtja.com/](https://mall.gtja.com/)
+### 0.概览
+
+![mall_business.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/mall_business.jpg)
 
 ### 1.资产管理
 ### 2.收益凭证
