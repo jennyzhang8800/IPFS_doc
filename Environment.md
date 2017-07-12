@@ -113,6 +113,7 @@ OS name: "windows 8.1", version: "6.3", arch: "amd64", family: "windows"
 ### 5. 安装IntelliJ IDEA
 
 1. 双击安装``ideaIU-2017.1.4.exe``
+2. 激活：http://idea.iteblog.com/key.php
 2. 设置maven
 file-->settings-->maven
 ```
