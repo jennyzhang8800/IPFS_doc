@@ -1,6 +1,6 @@
-### Kafka使用帮助
+# Kafka使用帮助
 
-### 0.配置
+## 0.配置
 
 zookeeper:3个
 
@@ -9,7 +9,8 @@ broker:3个
 partition:3个
 
 
-### 1.启动Kafka
+## 1.启动Kafka
+
 
 **(1)启动zookeeper集群**
 
@@ -54,7 +55,7 @@ nohup bin/kafka-server-start3.sh config/server3.properties &
 
 至此，Kafka己经准备好了！接下面就可以进行生产与消费了。
 
-### 2.简单的测试
+## 2.简单的测试
 
 **(1)新建一个topic**
 
@@ -97,7 +98,7 @@ bin/kafka-console-consumer.sh --bootstrap-server 192.168.5.128:9092,192.168.5.12
 
 可以看到一旦在生产者窗口输入一条消息，消费者窗口就会显示出来。
 
-### 3.在IDEA中写java代码进行测试
+## 3.在IDEA中写java代码进行测试
 
 **(1)在pom.xml中加入dependencies和plugin**
 ```
