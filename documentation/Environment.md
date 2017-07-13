@@ -1,6 +1,17 @@
 ## 环境搭建
 
-### 0. 系统
+
+
+**目录**
+* [0. 系统](#env)
+* [1. JDK安装](#jdk)
+* [2.配置maven](#maven)
+* [3. SVN安装](#svn)
+* [4. 安装proxifier](#proxi)
+* [5. 安装IntelliJ IDEA](#idea)
+<hr/>
+
+<h2 id='env'>0. 系统</h2>
 
 操作系统：
 
@@ -13,7 +24,7 @@ windows8 64位
 4. proxifier
 5. IntelliJ IDEA
 
-### 1. JDK安装
+<h2 id='jdk'>1. JDK安装</h2>
 
 1. 双击安装``jdk-7u67-windows-x64.exe``
 
@@ -40,7 +51,7 @@ java -version
 ```
 可以看到版本信息，说明配置成功
 
-### 2.配置maven
+<h2 id='maven'>2.配置maven</h2>
 
 在``apache-maven-3.3.9-bin\apache-maven-3.3.9\conf\settings.xml``中
 
@@ -92,7 +103,7 @@ Java home: C:\Program Files\Java\jdk1.7.0_67\jre
 Default locale: zh_CN, platform encoding: GBK
 OS name: "windows 8.1", version: "6.3", arch: "amd64", family: "windows"
 ```
-### 3. SVN安装
+<h2 id='svn'>3. SVN安装</h2>
 
 1. 双击安装``TortoiseSVN_1.9.5.27581_x64.msi``
 2. 修改环境变量
@@ -103,14 +114,14 @@ OS name: "windows 8.1", version: "6.3", arch: "amd64", family: "windows"
 ```
 3. 启动SVN，输入```svn://XXX.XXX.XXX.XX/```
 
-### 4. 安装proxifier
+<h2 id='proxi'>4. 安装proxifier</h2>
 
 1. 双击安装``ProxifierSetup.exe``
 2. 输入注册码
 
 
 
-### 5. 安装IntelliJ IDEA
+<h2 id='idea'>5. 安装IntelliJ IDEA</h2>
 
 1. 双击安装``ideaIU-2017.1.4.exe``
 2. 激活：http://idea.iteblog.com/key.php
