@@ -8,7 +8,7 @@ broker:3个
 
 partition:3个
 
-
+参考文档：[kafka官方文档](http://kafka.apache.org/quickstart)
 ## 1.启动Kafka
 
 
@@ -118,7 +118,7 @@ bin/kafka-console-consumer.sh --bootstrap-server 192.168.5.128:9092,192.168.5.12
        </configuration>
 </plugin>
 ```
-把example下的代码复制到project中
+把[examples](https://github.com/jennyzhang8800/gtja_mall/tree/master/code/kafka/examples)代码复制到project中
 
 **(2)运行ConsumerDemo.java**
 
