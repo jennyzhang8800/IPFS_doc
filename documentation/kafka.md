@@ -9,7 +9,7 @@
 
 <hr/>
 
-<h1 id="framework">0.配置</h1>
+<h2 id="framework">0.配置</h2>
 
 zookeeper:3个
 
@@ -64,7 +64,7 @@ nohup bin/kafka-server-start3.sh config/server3.properties &
 
 至此，Kafka己经准备好了！接下面就可以进行生产与消费了。
 
-<h1 id="test1">2.简单的测试</h1>
+<h2 id="test1">2.简单的测试</h2>
 
 **(1)新建一个topic**
 
@@ -107,7 +107,7 @@ bin/kafka-console-consumer.sh --bootstrap-server 192.168.5.128:9092,192.168.5.12
 
 可以看到一旦在生产者窗口输入一条消息，消费者窗口就会显示出来。
 
-<h1 id="test2">3.在IDEA中写java代码进行测试</h1>
+<h2 id="test2">3.在IDEA中写java代码进行测试</h2>
 
 **(1)在pom.xml中加入dependencies和plugin**
 ```
@@ -152,7 +152,7 @@ Received message: (218458, Message:218458) at offset 487812
 ```
 
 
-<h1 id="ref">4. 参考文档：</h1>
+<h2 id="ref">4. 参考文档</h2>
 
 + [kafka官方文档](http://kafka.apache.org/quickstart)
 + [kafka github源码](https://github.com/apache/kafka)
