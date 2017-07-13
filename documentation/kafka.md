@@ -18,7 +18,7 @@ broker:3个
 partition:3个
 
 
-<h1 id="start">1.启动Kafka</h1>
+<h2 id="start">1.启动Kafka</h2>
 
 
 **(1)启动zookeeper集群**
