@@ -6,3 +6,5 @@
 2.[金融商城产品信息整理](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/mall_business.md)
 
 3.[kafka](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/kafka.md)
+
+4.[Sitemap](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/SiteMap.md)
