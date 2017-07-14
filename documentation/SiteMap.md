@@ -34,7 +34,7 @@
 
  入参设置:inDto，调用接口，返回新闻资讯列表对象，获得新闻资讯列表，遍历该列表，如果资讯的发布日期是今天，则通过DOC_ID，拼出URL
 
-![getSAndGNewsUrl.jpg](https://github.com/jennyzhang8800/gtja_mall/tree/master/pictures/getSAndGNewsUrl.jpg)
+![getSAndGNewsUrl.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/getSAndGNewsUrl.jpg)
 
 
 <h2 id='sitemap'>3.SiteMap格式</h2>
