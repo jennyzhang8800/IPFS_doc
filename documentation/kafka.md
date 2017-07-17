@@ -156,3 +156,4 @@ Received message: (218458, Message:218458) at offset 487812
 
 + [kafka官方文档](http://kafka.apache.org/quickstart)
 + [kafka github源码](https://github.com/apache/kafka)
++ [kafka中文文档](http://orchome.com/kafka/index)
