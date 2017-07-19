@@ -47,9 +47,9 @@ bin/zkServer.sh status conf/zoo2.cfg
 cd /opt/rpc/kafka/
 ```
 ```
+nohup bin/kafka-server-start.sh config/server.properties &
 nohup bin/kafka-server-start1.sh config/server1.properties &
 nohup bin/kafka-server-start2.sh config/server2.properties &
-nohup bin/kafka-server-start3.sh config/server3.properties &
 ```
 检查kafka和zookeeper是否都己启动。输入``jps``查看当前java进程,可以看到下面的信息：
 ```
