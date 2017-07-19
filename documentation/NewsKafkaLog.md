@@ -2,15 +2,33 @@
 
 **目录**
 * [0. 需求](#demand)
-* [1. 代码实现](#code)
-
+* [1. 代码实现](#archi)
+* [2. 代码实现](#code)
+* [3. 附录](#attach)
 <hr/>
 
 <h2 id='demand'>0. 需求</h2>
 
+>原先接口的调用日志直接保存在oracle数据库。但随着商城业务的丰富，商城接口调用愈加频繁，日志记录量庞大，原先的日志存储方法己不能满足需求，如今对吞吐率有更高要求。
+
+>Kafka具有高吞吐率,分布式,可扩展，高可靠的特点，能有效解决大量日志传输的问题,被用作LinkedIn的活动流（Activity Stream）和运营数据处理管道（Pipeline）的基础,也是新浪日志处理的基础。
+
+>因此，采用Kafka集群作为消息队列，负责日志数据的接收，存储和转发，然后把日志持久保存到MongDB中的方法，能满足目前商城接口调用日志存储的需求。
+
+<h2 id='archi'>1.框架</h2>
+
+原先日志存储方式：
+
+![kafkalog_old.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/kafkalog_old.jpg)
+
+使用kafka集群后的日志存储方法：
+
+![kafkalog_new.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/kafkalog_new.jpg)
 
 
-<h2 id='code'>1. 代码实现</h2>
+<h2 id='code'>2. 代码实现</h2>
+
+这是“新闻资讯”版块接口调用日志存储的例子。在原先直接存储到oracle数据库的基础代码上进行修改.最终实现先把日志信息异步发布到Kafka集群中，再存储到MongoDB的效果。 Kafka的配置己经封装成jar。
 
 ### (1)maven 把jar包导入本地仓库
 
@@ -113,3 +131,24 @@ public class CommonLog implements Serializable{
 
     }
 ```
+
+<h2 id='attach'>3. 附录</h2>
+
++ kafka集群:
+
+![kafka_cluster.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/kafka_cluster.jpg)
+
++ kafka消息传递:
+
+![kafka_message.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/kafka_message.jpg)
+
+kafka的特性决定它非常适合作为"日志收集中心";application可以将操作日志"批量""异步"的发送到kafka集群中,而不是保存在本地或者DB中;kafka可以批量提交消息/压缩消息等,这对producer端而言,几乎感觉不到性能的开支.此时consumer端可以使Hadoop等其他系统化的存储和分析系统
+
++ 参考文档:
+  + [kafka_quick_start](https://www.w3cschool.cn/apache_kafka/apache_kafka_quick_guide.html)
+  + [Kafka特点](http://blog.csdn.net/louisliaoxh/article/details/51516150)
+  + [kafka结构 ](http://www.cnblogs.com/gslyyq/p/5240122.html)
+  + [Kafka应用场景](http://www.cnblogs.com/stopfalling/p/5375492.html)
+  + [Kafka使用帮助](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/kafka.md)
+ 
+
