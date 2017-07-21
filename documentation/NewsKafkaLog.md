@@ -62,7 +62,7 @@ mvn install:install-file -Dfile=D:\common-kafka.jar   -DgroupId=com.hahafucker  
 在``app/src/main/resources/`` 下新建``applicationContext_kafa.xml``。加入两个bean
 ```
  <!--kafka生产者-->
-    <bean id="ProducerProvider" class="com.linkstec.common.kafka.defaultKafkaTemplate.ProducerProvider">
+    <bean id="ProducerProvider" class="***">
         <property name="defaultAsynSend" value="true"></property>
         <property name="delayRetries" value="2"></property>
         <property name="configs">
@@ -76,7 +76,7 @@ mvn install:install-file -Dfile=D:\common-kafka.jar   -DgroupId=com.hahafucker  
         <property name="producerGroup" value="LOG_COLLECTION"></property>
     </bean>
 
-    <bean id="SqlLogger" class="com.linkstec.common.log.SqlLogger">
+    <bean id="SqlLogger" class="***">
         <constructor-arg>
             <value type="java.lang.String">${logTopic}</value>
         </constructor-arg>
