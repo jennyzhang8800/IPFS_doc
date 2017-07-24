@@ -24,7 +24,7 @@ have been peer-to-peer file-sharing applications primarily geared toward large m
 tably, Napster, KaZaA, and BitTorrent [2] deployed large file distribution systems supporting over 100 million simul-
 taneous users. Even today, BitTorrent maintains a massive deployment where tens of millions of nodes churn daily [16].These applications saw greater numbers of users and files distributed than their academic file system counterparts. However, the applications were not designed as infrastructure to be built upon. While there have been successful repurposings, no general file-system has emerged that others global,low-latency, and decentralized distribution.
 
-在构建一个全球分布式文件系统方面，已经有许多尝试。有些系统已取得显著成功，其他系统完全失败。在学术界的尝试中，AFS [ 6 ]已经取得了广泛的成功，至今仍在继续使用。其的系统没有取得同样的成功。在学术界之外，最成功的系统主要是面向大型媒体（音频和视频）的对等文件共享应用程序。最值得注意的是，Napster，Kazaa和BitTorrent部署，[ 2 ]大文件分发系统支持超过1亿个并发用户。即使在今天，BitTorrent仍然保持着大规模的部署，每天有数以千万计的节点在流失。这些应用程序比他们的学术文件系统对应的用户和文件数量更多。然而，这些应用程序并没有被设计成基础设施。虽然有过成功的再利用，但没有出现能提供全球的，低延迟的，去中心化的通用的文件系统。
+在构建一个全球分布式文件系统方面，已经有许多尝试。有些系统已取得显著成功，其他系统完全失败。在学术界的尝试中，AFS [ 6 ]已经取得了广泛的成功，至今仍在继续使用。其他的系统没有取得同样的成功。在学术界之外，最成功的系统主要是面向大型媒体（音频和视频）的对等文件共享应用程序。最值得注意的是，Napster，Kazaa和BitTorrent部署，[ 2 ]大文件分发系统支持超过1亿个并发用户。即使在今天，BitTorrent仍然保持着大规模的部署，每天有数以千万计的节点在流失。这些应用程序比他们的学术文件系统对应的用户和文件数量更多。然而，这些应用程序并没有被设计成基础设施。虽然有过成功的再利用，但没有出现能提供全球的，低延迟的，去中心化的通用的文件系统。
 
 >Perhaps this is because a “good enough" system for most use cases already exists: HTTP. By far, HTTP is the most successful “distributed system of files" ever deployed. Coupled with the browser, HTTP has had enormous technical and social impact. It has become the de facto way to transmit files across the internet. Yet, it fails to take advantage of dozens of brilliant file distribution techniques invented in the last fifteen years. From one prespective, evolving Web infrastructure is near-impossible, given the number of backwards compatibility constraints and the number of strong parties invested in the current model. But from another perspective, new protocols have emerged and gained wide use since the emergence of HTTP. What is lacking is upgrading design: enhancing the current HTTP web, and introducing new functionality without degrading user experience.
 
@@ -94,7 +94,7 @@ nodes when a key becomes popular).
 3. Additionally, Coral organizes a hierarchy of separate DSHTs called clusters depending on region and size.
 This enables nodes to query peers in their region 
 
-一些P2P文件系统直接把数据块存储在DHTs中，这种作法“浪费存储和带宽，因为数据必须被存储在不需要的节点上”[5]。Kademlia在三个特别重要的方面扩展了DSHT：
+一些P2P文件系统直接把数据块存储在DHTs中，这种作法“浪费存储和带宽，因为数据必须被存储在不需要的节点上”[5]。DSHT在三个特别重要的方面扩展了Kademlia：
 
 
 1. Kademlia在id离key“最近”的节点上存储值(异或距离)。这并不考虑应用程序数据局部性，忽略己经有数据的“远”的节点，只关注最近的节点存储而不管节点是否需要。这浪费了有用的存储和带宽。相反，Coral存储地址到可以提供数据块的peers中。
@@ -112,10 +112,10 @@ other in the presence of a large fraction of adversaries in the network. S/Kadem
 0.85 even with an adversarial fraction as large as half of the nodes.
 
 
-S / Kademlia [ 1 ]用两个尤为重要手段对Kademlia进行扩展以对抗恶意攻击：
+S / Kademlia [ 1 ]用两个尤为重要的手段对Kademlia进行扩展以对抗恶意攻击：
 
-1. S/Kademlia提供一个方案来保护NodeId的生成，预防Sybill攻击。它要求节点创建一个PKI密钥对，从中提取它们的身份，并将它们的消息相互签名，一个方案包括工作证明密码拼图使生成sybills昂贵。
-2. S/Kademlia节点通过不相交的路径查找值，以确保在网络中的存在很大一部分对手的时候，诚实的节点也可以互相连接。当对手占所有节点一半的时候，S/Kademlia甚至能实现0.85的成功率。
+1. S/Kademlia提供一个方案来保护NodeId的生成，预防Sybill攻击。它要求节点创建一个PKI密钥对，从中提取它们的身份，并将它们的消息相互签名，一个方案包括工作证明密码拼图使生成sybills变得昂贵。
+2. S/Kademlia节点通过不相交的路径查找值，以确保在网络中存在很大一部分对手的时候，诚实的节点也可以互相连接。当对手占所有节点一半的时候，S/Kademlia甚至能实现0.85的成功率。
 
 ## 2.2 Block Exchanges - BitTorrent
 2.2 块交换-BitTorrent
@@ -225,7 +225,7 @@ Notation: data structures and functions below are specified in Go syntax.
 标记：下面的数据结构和函数在GO语法中指定。
 
 ## 3.1 Identities
-3.1 标识符
+3.1 身份
 >Nodes are identified by a NodeId, the cryptographic hash3 of a public-key, created with S/Kademlia's static crypto puz-
 zle [1]. Nodes store their public and private keys (encrypted with a passphrase). Users are free to instatiate a “new" node identity on every launch, though that loses accrued network benefits. Nodes are incentivized to remain the same.
 
@@ -277,6 +277,7 @@ IPFS更喜欢自描述的值，而不是锁定系统到一组特定的函数选�
 自描述的值允许使用合适的不同的参数选择
 
 ## 3.2 Network
+3.2 网络
 >IPFS nodes communicate regualarly with hundreds of other nodes in the network, potentially across the wide internet.
 The IPFS network stack features:
 * Transport: IPFS can use any transport protocol,and is best suited for WebRTC DataChannels [?] (for browser connectivity) or uTP(LEDBAT [14]).
@@ -314,6 +315,7 @@ IPFS可以使用任何网络；它不依赖或假定访问IP. 这允许IPFS用�
 ```
 
 ## 3.3 Routing
+3.3 路由
 >IPFS nodes require a routing system that can find (a)other peers' network addresses and (b) peers who can serve
 particular objects. IPFS achieves this using a DSHT based on S/Kademlia and Coral, using the properties discussed in
 2.1. The size of objects and use patterns of IPFS are similar to Coral [5] and Mainline [16], so the IPFS DHT makes a
@@ -369,6 +371,7 @@ This incentivizes nodes to cache and disseminate rare pieces,even if they are no
 在基本案例中，BitSwap节点必须以块的形式向对方提供直接的值。当跨节点的块分配是互补的时，这种方法很好，意思是节点正好有其他想要的。通常情况下，并非如此。在某些情况下，节点必须为它们的块工作。在一个节点没有它的对等节点想要的块的情况下（或该节点根本没有块），它将以比本身节点需求更低的优先级去寻找它的对等节点想要的部分。这鼓励节点缓存和传播稀有部分，即使节点本身对这些稀有部分不感兴趣。
 
 ### 3.4.1 BitSwap Credit
+BitSwap 信用
 >The protocol must also incentivize nodes to seed when they do not need anything in particular, as they might have
 the blocks others want. Thus, BitSwap nodes send blocks to their peers optimistically, expecting the debt to be repaid.
 But leeches (free-loading nodes that never share) must be protected against. A simple credit-like system solves the
@@ -389,6 +392,7 @@ Note that if a node decides not to send to a peer, the node subsequently ignores
 注意，如果一个节点决定不发送给对等节点，这个节点在一个ignore_cooldown 超时随后忽略了对等节点.这可以防止发送者试图通过掷更多的骰子来进行游戏。（默认bitswap 是10秒）
 
 ### 3.4.2 BitSwap Strategy
+BitSwap策略
 >The differing strategies that BitSwap peers might employ have wildly different effects on the performance of the exchange as a whole. In BitTorrent, while a standard strategy is specified (tit-for-tat), a variety of others have been
 implemented, ranging from BitTyrant [8] (sharing the least possible), to BitThief [8] (exploiting a vulnerability and never share), to PropShare [8] (sharing proportionally). A range of strategies (good and malicious) could similarly be implemented by BitSwap peers. The choice of function, then,should aim to:
 1. maximize the trade performance for the node, and the whole exchange
