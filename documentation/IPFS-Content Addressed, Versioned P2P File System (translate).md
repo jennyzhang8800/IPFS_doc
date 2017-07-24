@@ -413,11 +413,17 @@ sigmoid, scaled by a debt retio:
 
 一个节点和它的对等节点的负债率r:
 
+![r.JPG](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/r.JPG)
+
 给定r, 发送给一个债务人的概率为：
+
+![P.JPG](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/P.JPG)
 
 >As you can see in Figure 1, this function drops off quickly as the nodes' debt ratio surpasses twice the established credit.
 
 如图1所示，当节点的债务比率超过既定信用额的两倍时，这个函数就会迅速下降。
+
+![figure1.JPG](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/figure1.JPG)
 
 >The debt ratio is a measure of trust: lenient to debts between nodes that have previously exchanged lots of data successfully, and merciless to unknown, untrusted nodes. This (a)provides resistance to attackers who would create lots of new nodes (sybill attacks), (b) protects previously successful trade relationships, even if one of the nodes is temporarily unable to provide value, and (c) eventually chokes relationships that have deteriorated until they improve.
 
@@ -811,6 +817,8 @@ IPFS中的一个提交对象代表任意对象版本历史的快照 。和Git类
 ]
 }
 ```
+
+![figure2.JPG](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/figure2.JPG)
 
 ```
 > ipfs file-cat <ccc111-hash> --json
