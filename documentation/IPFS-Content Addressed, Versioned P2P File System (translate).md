@@ -203,7 +203,9 @@ a market, weakly incentivizes data replication. Trade Strategies swappable. Desc
 5. Objects - a Merkle DAG of content-addressed immutable objects with links. Used to represent arbitrary datastructures, e.g. file hierarchies and communication systems. Described in Section 3.5.
 6. Files - versioned file system hierarchy inspired by Git.
 Described in Section 3.6.
-7.Naming - A self-certifying mutable name system. Described in Section 3.7.
+7.Naming - A self-certifying mutable name system. Described in Section 
+
+.
 
 IPFS是对等的；没有节点享有特权。IPFS节点在本地存储IPFS对象。节点相互连接并传输对象。这些对象表示文件和其他数据结构。IPFS协议分为负责不同功能的一堆子协议。
 
@@ -847,6 +849,7 @@ IPFS中的一个提交对象代表任意对象版本历史的快照 。和Git类
 
 ## 3.7 IPNS: Naming and Mutable State
 3.7 IPNS:命名和可变状态
+
 >So far, the IPFS stack forms a peer-to-peer block exchange constructing a content-addressed DAG of objects. It serves to publish and retrieve immutable objects. It can even track the version history of these objects. However, there is a critical component missing: mutable naming. Without it,all communication of new content must happen off-band,sending IPFS links. What is required is some way to retrieve mutable state at the same path.
 
 到目前为止，IPFS堆栈形成了一个对等块交换，构造对象的内容寻址DAG。它用于发布和检索不可变对象。它甚至可以跟踪这些对象的版本历史。但是，缺少一个关键组件：可变的命名。没有它，所有新内容的通信都必须解绑，发送IPFS链接。所需的是在同一路径上检索可变状态的某种方法。
@@ -854,6 +857,7 @@ IPFS中的一个提交对象代表任意对象版本历史的快照 。和Git类
 >It is worth stating why -if mutable data is necessary in the end -we worked hard to build up an immutable Merkle DAG. Consider the properties of IPFS that fall out of the Merkle DAG: objects can be (a) retrieved via their hash, (b) integrity checked, (c) linked to others, and (d) cached indefinitely. In a sense:
 
 值得说明的是为什么如果在端的可变数据是必要的，我们努力建立一个不变的Merkle DAG。考虑到从Merkle DAG分离出来的IPFS的性能：对象可以（a）通过它们的哈希被检索 （b）完整性检查（c）连接到其他对象(d)缓存。在某种意义上：
+
 ```
 
                   Objects are permanent
