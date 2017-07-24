@@ -551,19 +551,95 @@ seconds). The node issues Peer.close(false).
 
 >After a close message, both receiver and sender tear down the connection, clearing any state stored. The Ledger may be stored for the future, if it is useful to do so.
 
+Notes.
+
+Non-open messages on an inactive connection should be ignored. In case of a send_block message, the receiver may check the block to see if it is needed and correct, and if so, use it. Regardless, all such out-of-order messages trigger a close(false) message from the receiver to force re-initialization of the connection.
+
 是否想要关闭连接的最终参数是发送方的，或者不是。如果不是，接收方可能选择马上重新打开连接。这避免了过早关闭。
 
 一个对等连接应该在以下两种条件下关闭：
 
-+ Silentce没有从对等节点接收到任何消息
++ Silence_wait 超时己经过期但还没有从对等节点接收到任何消息（默认的BitSwap使用30s）。节点宣布Peer.close(false)
++ 节点退出并且BitSwap被关闭。在这种情况下，节点宣布Peer.close(false)
 
+在关闭消息之后，接收者和发送者拆毁连接，清除所有存储的状态。分类账如果有必要可能存储下来。
 
-......
+注意：
 
+应忽略非活动连接上的非公开消息。Send_block消息的情况下，接收者可能检查块是否是必要的和正确，如果有必要，则使用它。无论如何，所有这样的无序消息都会从接收方触发关闭（false）消息，迫使连接重新初始化。
 
+## 3.5  Object Merkle DAG
+
+>The DHT and BitSwap allow IPFS to form a massive peer-to-peer system for storing and distributing blocks quickly and robustly. On top of these, IPFS builds a Merkle DAG, a directed acyclic graph where links between objects are cryptographic hashes of the targets embedded in the sources.This is a generalization of the Git data structure. Merkle DAGs provide IPFS many useful properties, including:
+
+1. Content Addressing: all content is uniquely identified by its multihash checksum, including links.
+2. Tamper resistance: all content is veri_ed with its checksum. If data is tampered with or corrupted, IPFS detects it.
+3. Deduplication: all objects that hold the exact same content are equal, and only stored once. This is particularly useful with index objects, such as git trees and commits, or common portions of data.
+The IPFS Object format is:
+
+DHT和BitSwap 允许IPFS快速和有力地形成一个庞大的P2P系统储存和分配块。除这些之外，IPFS创建了Merkle DAG,这是一个有向非循环图，对象之间的连接是嵌入在源中的目标的加密哈希。这是Git数据结构的归纳。Merkle DAG提供IPFS许多有用的属性，包括：
+1. 内容寻址：所有的内容都是由其multihash校验唯一标识，包括链接。
+2. 防篡改：所有内容都用校验和验证。如果数据被篡改或损坏，IPFS都会检测到。
+3. 重复数据删除：持有相同内容的所有对象都是平等的，只存储一次。这对于索引对象（例如Git树和提交）或数据的公共部分特别有用。
+   IPFS对象的格式是：
+  
+ ```
+  type IPFSLink struct {
+Name string
+             // name or alias of this link
+Hash Multihash
+// cryptographic hash of target
+Size int
+// total size of target
+}
+type IPFSObject struct {
+inks []IPFSLink
+// array of links
+data []byte
+// opaque content data
+}
+
+ ```
+
+>The IPFS Merkle DAG is an extremely flexible way to store data. The only requirements are that object references be (a) content addressed, and (b) encoded in the format above. IPFS grants applications complete control over the data field; applications can use any custom data format they chose, which IPFS may not understand. The separate in object link table allows IPFS to:
+
+IPFS Merkle DAG是存储数据的一个非常灵活的方式。唯一的要求是对象引用是（a）内容寻址，（b）以上述格式编码。规授予数据域上的应用完全控制，应用程序可以使用他们选择的任何自定义数据格式，IPFS可能不理解。对象
+
+>List all object references in an object. For example:
+
+列出一个对象中的所有引用：
+
+```
+> ipfs ls /XLZ1625Jjn7SubMDgEyeaynFuR84ginqvzbXLYkgq61DYaQ8NhkcqyU7rLcnSa7dSHQ16x 189458 lessXLHBNmRQ5sJJrdMPuu48pzeyTtRo39tNDR5 19441 script XLF4hwVHsVuZ78FZK6fozf8Jj9WEURMbCX4 5286 template
+```
+
+```<object multihash> <object size> <link name>```
+
+>Resolve string path lookups, such as foo/bar/baz. Given an object, IPFS resolves the first path component to a hash in the object's link table, fetches that second object, and repeats with the next component. Thus, string paths can walk the Merkle DAG no matter what the data formats are.
+
+解析字符串路径查找，像foo/bar/bax.给定一个对象，IPFS把路径第一部分分解为对象的链表中的哈希，然后获取第二个对象，重复上述操作。因此，不管数据格式是什么，字符串路径都能
+
+>Resolve all objects referenced recursively:
+
+解析递归引用的所有对象
+
+```
+> ipfs refs --recursive \
+/XLZ1625Jjn7SubMDgEyeaynFuR84ginqvzb
+XLLxhdgJcXzLbtsLRL1twCHA2NrURp4H38s
+XLYkgq61DYaQ8NhkcqyU7rLcnSa7dSHQ16x
+XLHBNmRQ5sJJrdMPuu48pzeyTtRo39tNDR5
+XLWVQDqxo9Km9zLyquoC9gAP8CL1gWnHZ7z
+
+```
+
+>A raw data field and a common link structure are the necessary components for constructing arbitrary data structures on top of IPFS. While it is easy to see how the Git object model fits on top of this DAG, consider these other potential data structures: (a) key-value stores (b) traditional relational databases (c) Linked Data triple stores (d) linked document publishing systems (e) linked communications platforms (f) cryptocurrency blockchains. These can all be modeled on top of the IPFS Merkle DAG, which allows any of these systems to use IPFS as a transport protocol for more complex applications.
+
+原始数据字段和一个普通的链结构是在IPFS上构建任意数据结构的必要组成部分. 虽然很容易看出Git对象模型如何适合于DAG，但考虑到其他潜在的这些数据结构：（a）键值存储（b）传统的关系型数据库(c) 链接数据三元组（d）链接文档发布系统（E）链接的通信平台（F）加密货币区块链。这些都可以在IPFS Merkle DAG上建模，它允许任何这些系统使用IPFS作为更复杂的应用程序的传输协议。
 
 ### 3.5.1 Paths
-IPFS objects can be traversed with a string path API.Paths work as they do in traditional UNIX filesystems and the Web. The Merkle DAG links make traversing it easy Note that full paths in IPFS are of the form:
+
+>IPFS objects can be traversed with a string path API.Paths work as they do in traditional UNIX filesystems and the Web. The Merkle DAG links make traversing it easy Note that full paths in IPFS are of the form:
 
 IPFS 可以通过字符串路径API遍历。路径像传统的UNIX文件系统和网络那样工作。Merkle DAG使得遍历容易。注意IPFS中的全路径是以下形式：
 ```
@@ -994,7 +1070,6 @@ This is similar to what we see today with DNS and Web URLs:
 
 >IPFS is designed to be used in a number of different ways.Here are just some of the usecases I will be pursuing:
 
-IPFS被设计成多种不同的方式使用，下面只是一些用例:
 1. As a mounted global filesystem, under /ipfs and /ipns.
 2. As a mounted personal sync folder that automatically versions, publishes, and backs up any writes.
 3. As an encrypted file or data sharing system.
@@ -1008,6 +1083,7 @@ IPFS被设计成多种不同的方式使用，下面只是一些用例:
 11. On webpages, as a web CDN.
 12. As a new Permanent Web where links do not die.
 
+IPFS被设计成多种不同的方式使用，下面只是一些用例:
 1. 作为一个挂载的全球文件系统，在/ipfs和/ipns之下
 2. 作为一个挂载的个人同步文件夹，它可以自动地编辑、发布和备份任何写操作。
 3. 作为加密文件或数据共享系统。
@@ -1051,7 +1127,7 @@ IPFS背后的想法是几十年来成功的分布式系统研究在学术界和�
 
 IPFS是一个雄心勃勃的新的分散互联网基础设施的构想，在此基础上可以建立许多不同类型的应用程序。在最低限度，它可以作为一个全球性的，挂载的版本文件系统的命名空间，或作为下一代文件共享系统。在其最好的情况下，它能推动web到一生片新天地，在那里发布有价值的信息并需要出版商，而是发布给那些感兴趣的人，用户可以信任他们收到的内容而不用信任从哪里收到消息，老的但重要文件不丢失。IPFS期待带我们走向永久的Web。
 
-#5. ACKNOWLEDGMENTS
+# 5. ACKNOWLEDGMENTS
 5.感谢
 >IPFS is the synthesis of many great ideas and systems. It would be impossible to dare such ambitious goals without standing on the shoulders of such giants. Personal thanks to David Dalrymple, Joe Zimmerman, and Ali Yahya for long discussions on many of these ideas, in particular: exposing the general Merkle DAG (David, Joe), rolling hash blocking (David), and s/kademlia sybill protection (David, Ali). And special thanks to David Mazieres, for his ever brilliant ideas.
 
