@@ -1,10 +1,16 @@
 对[Benet, Juan (2014) IPFS - Content Addressed, Versioned, P2P File System.](https://github.com/ipfs/papers/raw/master/ipfs-cap2pfs/ipfs-p2p-file-system.pdf)
 的翻译整理。
 
-链接：
-+ [ipfs-github](https://github.com/ipfs)
-+ [ipfs.io](https://ipfs.io/docs/getting-started/)
+**目录**
+* [1 原文翻译（中英对照）](#trans)
+* [2. 原文要点归纳](#points)
+* [3. 相关链接](#link)
+* [4. 原文翻译word版](#word)
+<hr/>
 
+
+
+<h2 id='trans'>1. 原文翻译（中英对照）</hw>
 ## IPFS - Content Addressed, Versioned, P2P File System
 ## IPFS-内容寻址，版本控制的P2P文件系统
 
@@ -1145,3 +1151,42 @@ IPFS是一个雄心勃勃的新的分散互联网基础设施的构想，在此�
 
 
 IPFS是许多伟大的思想和系统的综合。如果不站在巨人的肩膀上实现如此远大的目标是不可能的。谢谢David Dalrymple，Joe Zimmerman，和Ali Yahya对这些想法进行长时间的讨论，特别是： 曝光大致的Merkle DAG（David, Joe），滚动哈希块（David)），和s/kademlia sybill保护（David，Ali）。特别感谢David Mazieres，他辉煌的想法。
+
+
+<h2 id='points'>2.原文要点归纳</h2>
+
+**为什么要提出IPFS？**：IPFS是位于TCP/IP协议的应用层协议（与http协议是竞争关系）.使用HTTP协议移动小文件是相对便宜的，但是HTTP所有的事情都集中在一段报文中,http需要中心化的域名服务器，更需要中心化的web服务器。然而，我们己经进入大数据时代，面临需要托管和分发PB级数据集,跨组织的大数据计算等问题，由于带宽问题等影响，http不能令人满意。因此，提出了IPFS，它综合己经取得成功的P2P技术，把多个技术耦合，以达到整体大于各部分之和的效果。同时，期望IPFS能成为web本身的一部分，替代Http。
+
+**IPFS:** IPS是一个分布式文件系统，它成功的综合了以前的p2p系统的思想，包括DHTs,BitTorrent,Git 和SFS. IPFS主要贡献是耦合这些系统以及合成设计。
+
++ DHT :分布式哈希表。使用的是S/Kademlia 算法。优点在于快速点对点定位，最优路经，防攻击
++ BitTorrent: 内容分发协议。它采用高效的软件分发系统和点对点技术共享大体积文件。(数据是双通道传输，参与人越多速度越快，解决了带宽问题。)
++ Git: 版本控制系统。(分布式友好方式捕获对文件系统树的更改)
++ SFS: 自我认证文件系统(分布式信任链，平等共享的全局命名空间。方便所有的文件有全局唯一名字)
+
+**IPFS 技术栈**
+1. sfs，git技术分别用到了IPNS 层，应用层(applications)。 全局唯一名字, 带版本跟踪。
+2. BitTorrent, DHT分别用到了数据交换层(exchange)，路由层(routing)。快速定位，省带宽交换。
+
+![ipfs_stack.jpg](https://github.com/jennyzhang8800/gtja_mall/blob/master/pictures/ipfs_stack.jpg)
+
+上述四个主要的技术，IPFS以BitTorrent为基础提出了新的块交换协议：BitSwap。其他的DHT，Git，SFS基本上使用原有思想。
+
+**BitSwap**和BitToreent类似的是，BitSwap对等点希望获得一组块（want_list）,并且拥有另外一组块提供交换(have_list)。与BitTorrent不同的是：BitSwap不把块限定在一个torrent. BitSwap作为一个持续的市场运作，无论这些块属于哪个文件，节点都可以获得他们所需要的块。这些块可能来自文件系统中完全无关的文件。节点聚集在一起进行市场交易。
+
+BitSwap节点用分类账记述与其他节点的传输。
+
+一个对等节点生命期的草图：
+1. 打开：Peer.open(NodeId, Ledger).对等节点之间发送分类账直到它他们同意
+2. 发送：Peer.send_want_list(WantList). Peer.send_block(Block).对等节点之间交换want_list和块
+3. 关闭：Peer.close(Bool).对等点关闭连接
+
+
+
+
+<h2 id='link'>3.相关链接：</h2>
++ [ipfs-github](https://github.com/ipfs)
++ [ipfs.io](https://ipfs.io/docs/getting-started/)
+
+<h2 id='word'>4.原文翻译word版：</h2>
+[点击下载](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/IPFS_translate_zyni.docx?raw=true)
