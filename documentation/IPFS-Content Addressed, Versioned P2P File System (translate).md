@@ -10,7 +10,8 @@
 
 
 
-<h2 id='trans'>1. 原文翻译（中英对照）</hw>
+<h2 id='trans'>1. 原文翻译（中英对照）</h2>
+
 ## IPFS - Content Addressed, Versioned, P2P File System
 ## IPFS-内容寻址，版本控制的P2P文件系统
 
@@ -1185,8 +1186,10 @@ BitSwap节点用分类账记述与其他节点的传输。
 
 
 <h2 id='link'>3.相关链接：</h2>
+
 + [ipfs-github](https://github.com/ipfs)
 + [ipfs.io](https://ipfs.io/docs/getting-started/)
 
 <h2 id='word'>4.原文翻译word版：</h2>
+
 [点击下载](https://github.com/jennyzhang8800/gtja_mall/blob/master/documentation/IPFS_translate_zyni.docx?raw=true)
